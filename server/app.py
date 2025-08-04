@@ -41,10 +41,10 @@ def read_coil():
             client.connect()
             
         # Lê uma bobina (coil)
-        emergency_stop = client.read_coils(address=3, count=1, slave=UNIT)
+        emergency_stop = client.read_coils(address=4, count=1, slave=UNIT)
         emergency_stop_value = emergency_stop.bits[0]
 
-        reset_button = client.read_coils(address=4, count=1, slave=UNIT)
+        reset_button = client.read_coils(address=3, count=1, slave=UNIT)
         reset_button_value = reset_button.bits[0]
 
         item_ready = client.read_coils(address=2, count=1, slave=UNIT)

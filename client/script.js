@@ -181,9 +181,9 @@ async function writeCoil(address, value) {
         if (data.success) {
             console.log(`Bobina ${address} alterada para ${value}`);
             // Atualizar o estado local e a interface
-            if (address === 3) {
+            if (address === 4) {
                 valueStop = value;
-            } else if (address === 4) {
+            } else if (address === 3) {
                 valueReset = value;
             }
             updateInterface();
@@ -203,13 +203,13 @@ async function writeCoil(address, value) {
 // Função para alternar o estado da EMERGENCIA
 async function toggleActive() {
     const newValue = !valueStop;
-    await writeCoil(3, newValue);
+    await writeCoil(4, newValue);
 }
 
 // Função para alternar o estado do RESET
 async function toggleAlert() {
     const newValue = !valueReset;
-    await writeCoil(4, newValue);
+    await writeCoil(3, newValue);
 }
 
 // Event listeners
@@ -230,9 +230,9 @@ function startPeriodicUpdates() {
     readCoils();
     readRegister();
     
-    // Configurar novos intervalos com tempo um pouco maior para dar mais margem
-    coilsIntervalId = setInterval(readCoils, 1000);  // Aumentar para 2 segundos
-    registerIntervalId = setInterval(readRegister, 2000);  // Aumentar para 2 segundos
+    
+    coilsIntervalId = setInterval(readCoils, 1000);
+    registerIntervalId = setInterval(readRegister, 2000);
 }
 
 // Função para parar os intervalos
@@ -257,7 +257,6 @@ window.addEventListener('beforeunload', function() {
     stopPeriodicUpdates();
 });
 
-// Remover código duplicado de inicialização
 // Se o DOM já estiver carregado, inicializar imediatamente
 if (document.readyState !== 'loading') {
     startPeriodicUpdates();
